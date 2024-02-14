@@ -100,8 +100,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
         Container(
           height: 20, //MediaQuery.of(context).size.height * 0.05,
           width: MediaQuery.of(context).size.width * 0.5,
-          child: Expanded(
-              child: Row(
+          child: Row(
             children: [
               Icon(icon, color: color),
               SizedBox(width: 8),
@@ -115,7 +114,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
                 overflow: TextOverflow.ellipsis,
               ),
             ],
-          )),
+          ),
         ),
         Text(
           amount,
@@ -171,6 +170,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
           int vouttotal = 0;
           //int ta = 0;
           //final vu = v[0].txid;
+          String txshort = tx.length >= 10 ? tx.substring(0, 10) : tx;
           for (var vin in user.vin) {
             vintotal += vin.prevout.value;
           }
@@ -194,16 +194,14 @@ class _TransictionScreenState extends State<TransictionScreen> {
                   Container(
                     height: 20,
                     width: MediaQuery.of(context).size.width,
-                    child: Expanded(
-                      child: Text(
-                        '${tx}',
-                        style: TextStyle(
-                          color: HexColor('#1bd8f4'),
-                          fontSize: 14,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                    child: Text(
+                      '${txshort}....',
+                      style: TextStyle(
+                        color: HexColor('#1bd8f4'),
+                        fontSize: 14,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   SizedBox(height: 16),
