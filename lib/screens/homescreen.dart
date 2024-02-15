@@ -73,7 +73,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
     setState(() {
       if (users.isNotEmpty) {
         // Exclude the last user as it will be duplicated
-        apiuser = respapi.sublist(1);
+        apiuser = respapi.sublist(0);
       } else {
         apiuser = respapi;
       }
@@ -164,6 +164,10 @@ class _TransictionScreenState extends State<TransictionScreen> {
           int v = user.vin.length;
           int vo = user.vout.length;
           bool condition = user.status.confirmed;
+          int ufee = user.fee;
+          double uweight = (user.weight) / 4;
+          double vb = ufee / uweight;
+          String rvb = vb.toStringAsFixed(2);
           //print(lastseen);
           int vintotal = 0;
           int vouttotal = 0;
@@ -269,10 +273,10 @@ class _TransictionScreenState extends State<TransictionScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Row(
+                        Row(
                           children: [
                             Text(
-                              '2.03 sat/B – 560 sat',
+                              '$rvb sat/vB – ${ufee} sat',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 10,
