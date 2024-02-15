@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:api/models/data.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class TransictionScreen extends StatefulWidget {
   const TransictionScreen({super.key});
@@ -24,7 +23,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
   int curp = 1;
   int itemsPerPage = 10;
   bool isLoading = false;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
@@ -53,7 +52,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
       // curp++;
       //fetuser();
     });
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     await apiModify();
   }
 
@@ -97,13 +96,13 @@ class _TransictionScreenState extends State<TransictionScreen> {
       children: [
         /*Icon(icon, color: color),
         SizedBox(width: 8),*/
-        Container(
+        SizedBox(
           height: 20, //MediaQuery.of(context).size.height * 0.05,
           width: MediaQuery.of(context).size.width * 0.5,
           child: Row(
             children: [
               Icon(icon, color: color),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Text(
                 '$shortAddress...',
                 style: TextStyle(
@@ -135,10 +134,10 @@ class _TransictionScreenState extends State<TransictionScreen> {
       url = lastseen;
     });*/
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 1, 9, 16),
+      backgroundColor: const Color.fromARGB(255, 1, 9, 16),
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           'API INTEGRATION',
           style: TextStyle(color: Colors.white),
         ),
@@ -152,11 +151,11 @@ class _TransictionScreenState extends State<TransictionScreen> {
           if (index == users.length) {
             // Show loading indicator
             return isLoading
-                ? Center(
+                ? const Center(
                     child: CircularProgressIndicator(
                         valueColor:
                             AlwaysStoppedAnimation<Color>(Colors.white)))
-                : SizedBox(); // Return an empty SizedBox if not loading
+                : const SizedBox(); // Return an empty SizedBox if not loading
           }
           final user = users[index];
           final tx = user.txid;
@@ -191,11 +190,11 @@ class _TransictionScreenState extends State<TransictionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     height: 20,
                     width: MediaQuery.of(context).size.width,
                     child: Text(
-                      '${txshort}....',
+                      '$txshort....',
                       style: TextStyle(
                         color: HexColor('#1bd8f4'),
                         fontSize: 14,
@@ -204,23 +203,23 @@ class _TransictionScreenState extends State<TransictionScreen> {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Column(children: [
                       Container(
                         width: double.infinity,
-                        color: Color.fromARGB(255, 1, 9, 16),
+                        color: const Color.fromARGB(255, 1, 9, 16),
                         child: ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: v,
                           itemBuilder: (context, vinIndex) {
                             final Vin vin = user.vin[vinIndex];
                             //vintotal = vintotal + vin.prevout.value;
                             return _buildTransactionRow(
                               icon: Icons.arrow_circle_right_outlined,
-                              address: '${vin.prevout.scriptpubkeyAddress}',
+                              address: vin.prevout.scriptpubkeyAddress,
                               amount: '${vin.prevout.value / 100000000} BTC',
                               color: Colors.red,
                               textcolor: HexColor('#1bd8f4'),
@@ -230,26 +229,26 @@ class _TransictionScreenState extends State<TransictionScreen> {
                       ),
                     ]),
                   ),
-                  Container(
+                  const SizedBox(
                     width: double.infinity,
                     height: 10,
                   ),
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Column(children: [
                       Container(
                         width: double.infinity,
-                        color: Color.fromARGB(255, 1, 9, 16),
+                        color: const Color.fromARGB(255, 1, 9, 16),
                         child: ListView.builder(
                           shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: vo,
                           itemBuilder: (context, voutIndex) {
                             final Vout vou = user.vout[voutIndex];
                             //vouttotal = vouttotal + vou.value;
                             return _buildTransactionRow(
                               icon: Icons.arrow_circle_right_outlined,
-                              address: '${vou.scriptpubkeyAddress}',
+                              address: vou.scriptpubkeyAddress,
                               amount: '${vou.value / 100000000} BTC',
                               color: Colors.green,
                               textcolor: HexColor('#1bd8f4'),
@@ -261,16 +260,16 @@ class _TransictionScreenState extends State<TransictionScreen> {
                   ),
 
                   // Fee Information
-                  Container(
+                  const SizedBox(
                     width: double.infinity,
                     height: 10,
                   ),
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             Text(
                               '2.03 sat/B – 560 sat',
@@ -301,7 +300,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
                                         borderRadius: BorderRadius.circular(
                                             1), // Adjust the radius to make it a square
                                       ),
-                                      minimumSize: Size(30, 25),
+                                      minimumSize: const Size(30, 25),
                                     )
                                   : ElevatedButton.styleFrom(
                                       backgroundColor: Colors.red,
@@ -309,11 +308,11 @@ class _TransictionScreenState extends State<TransictionScreen> {
                                         borderRadius: BorderRadius.circular(
                                             1), // Adjust the radius to make it a square
                                       ),
-                                      minimumSize: Size(30, 25),
+                                      minimumSize: const Size(30, 25),
                                     ),
                               child: Text(
                                 condition ? 'Conformations' : 'Unconform',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 10),
                               ),
                             ),
@@ -330,7 +329,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
                                         borderRadius: BorderRadius.circular(
                                             1), // Adjust the radius to make it a square
                                       ),
-                                      minimumSize: Size(30, 25),
+                                      minimumSize: const Size(30, 25),
                                     )
                                   : ElevatedButton.styleFrom(
                                       backgroundColor: Colors.red,
@@ -338,11 +337,11 @@ class _TransictionScreenState extends State<TransictionScreen> {
                                         borderRadius: BorderRadius.circular(
                                             1), // Adjust the radius to make it a square
                                       ),
-                                      minimumSize: Size(30, 25),
+                                      minimumSize: const Size(30, 25),
                                     ),
                               child: Text(
                                 '${ta}BTC',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 10),
                               ),
                             ),
@@ -366,7 +365,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
     });
 
     // Simulate API call delay
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     var url =
         'https://mempool.space/testnet/api/address/tb1qv2rlpsge5zx7jdkyt3wcpjrlqkzkxawhg9z9f3/txs';
     final uri = Uri.parse(url);
