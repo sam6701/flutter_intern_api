@@ -283,7 +283,7 @@ class _TransictionScreenState extends State<TransictionScreen> {
                               ),
                             ),
                             /*Text(
-                                '\$0.00',
+                                '\$0.0',
                                 style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 10,
