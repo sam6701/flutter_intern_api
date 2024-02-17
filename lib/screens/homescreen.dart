@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:api/models/data.dart';
 import 'package:hexcolor/hexcolor.dart';
+//import 'package:webview_flutter/webview_flutter.dart';
+//import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TransictionScreen extends StatefulWidget {
   const TransictionScreen({super.key});
@@ -81,6 +84,12 @@ class _TransictionScreenState extends State<TransictionScreen> {
       print("hello");
       isLoading = false;
     });
+  }
+
+  Future<void> openAppWebView(String appurl) async {
+    if (!await launchUrl(Uri.parse(appurl), mode: LaunchMode.inAppWebView)) {
+      throw Exception("could not launch $appurl");
+    }
   }
 
   Widget _buildTransactionRow(
@@ -197,14 +206,22 @@ class _TransictionScreenState extends State<TransictionScreen> {
                   SizedBox(
                     height: 20,
                     width: MediaQuery.of(context).size.width,
-                    child: Text(
-                      '$txshort....',
-                      style: TextStyle(
-                        color: HexColor('#1bd8f4'),
-                        fontSize: 14,
+                    child: GestureDetector(
+                      onTap: () {
+                        String appu = "https://mempool.space/testnet/tx";
+                        appu += "/${tx}";
+                        openAppWebView(appu);
+                        print("YO");
+                      },
+                      child: Text(
+                        '$txshort....',
+                        style: TextStyle(
+                          color: HexColor('#1bd8f4'),
+                          fontSize: 14,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   const SizedBox(height: 16),
